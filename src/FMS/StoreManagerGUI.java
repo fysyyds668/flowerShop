@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 
@@ -45,7 +46,7 @@ public class StoreManagerGUI extends JFrame {
         //输出默认
         try {
             data=new FlowerDatabase().FindAll(select_table);
-        } catch (SQLException | ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException | IOException ex) {
             throw new RuntimeException(ex);
         }
         refreshTable();
@@ -75,7 +76,7 @@ public class StoreManagerGUI extends JFrame {
                     select_table="flower1";
                     try {
                         data=new FlowerDatabase().FindAll(select_table);
-                    } catch (SQLException | ClassNotFoundException ex) {
+                    } catch (SQLException | ClassNotFoundException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
                     //System.out.println(select_table);
@@ -86,7 +87,7 @@ public class StoreManagerGUI extends JFrame {
                     select_table="supplies";
                     try {
                         data=new FlowerDatabase().FindAll(select_table);
-                    } catch (SQLException | ClassNotFoundException ex) {
+                    } catch (SQLException | ClassNotFoundException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
                     //System.out.println(select_table);
@@ -96,7 +97,7 @@ public class StoreManagerGUI extends JFrame {
                     select_table="fertilizers";
                     try {
                         data=new FlowerDatabase().FindAll(select_table);
-                    } catch (SQLException | ClassNotFoundException ex) {
+                    } catch (SQLException | ClassNotFoundException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
                     //System.out.println(select_table);
@@ -120,7 +121,7 @@ public class StoreManagerGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     data=new FlowerDatabase().Find(select_table,textField.getText());
-                } catch (SQLException | ClassNotFoundException ex) {
+                } catch (SQLException | ClassNotFoundException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 refreshTable();
@@ -148,7 +149,7 @@ public class StoreManagerGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     data = new FlowerDatabase().FindAll(select_table);
-                } catch (ClassNotFoundException | SQLException ex) {
+                } catch (ClassNotFoundException | SQLException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 refreshTable();
@@ -180,7 +181,7 @@ public class StoreManagerGUI extends JFrame {
                         //System.out.println(flowerID);
                         try {
                             new FlowerDatabase().Delete(select_table,ID,fieldID);
-                        } catch (SQLException | ClassNotFoundException ex) {
+                        } catch (SQLException | ClassNotFoundException | IOException ex) {
                             throw new RuntimeException(ex);
                         }
                         tableModel.removeRow(selectedRows[i]);
@@ -219,7 +220,7 @@ public class StoreManagerGUI extends JFrame {
                     //System.out.println("old"+oldvalueAt+" "+"new"+newvalueAt);
                     try {
                         new FlowerDatabase().update(firstRow, column, oldvalueAt, newvalueAt,select_table);
-                    } catch (SQLException | ClassNotFoundException ex) {
+                    } catch (SQLException | ClassNotFoundException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
                 }else if(column==0){
@@ -258,7 +259,7 @@ public class StoreManagerGUI extends JFrame {
                     label.setBounds(50,30,200,80);
                     label.setFont(new Font("SansSerif",Font.PLAIN,20));
                     jFrame.add(label);
-                } catch (SQLException | ClassNotFoundException ex) {
+                } catch (SQLException | ClassNotFoundException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
             }
@@ -272,16 +273,24 @@ public class StoreManagerGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     new FlowerDatabase().into_excel(select_table);//导入excel
-                } catch (SQLException | ClassNotFoundException ex) {
+                } catch (SQLException | ClassNotFoundException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
             }
         });
         add(excel_button);
 
+        /*ImageIcon imageIcon = new ImageIcon("src/resource/花店.jpg");
+        JLabel label = new JLabel(imageIcon);
+        label.setBounds(0,300,1000,700);
+        add(label);*/
 
         revalidate();
         repaint();
+    }
+
+    public void fun(){
+        System.out.println("asdfasdf");
     }
 
     public void refreshTable(){
@@ -292,7 +301,7 @@ public class StoreManagerGUI extends JFrame {
             JScrollPane scrollPane = new JScrollPane(table,
                     JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                     JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-            scrollPane.setBounds(0, 150, 985, 300);
+            scrollPane.setBounds(0, 150, 985, 500);
             add(scrollPane);
         } else {
             // 表格存在，更新数据
@@ -376,13 +385,13 @@ class Myaddflower extends JFrame{
                     Object field6= Double.parseDouble(textField6.getText());
                     try {
                         new FlowerDatabase().Insert(selectTable,field1,field2,field3,field4,field5,field6);
-                    } catch (ClassNotFoundException | SQLException ex) {
+                    } catch (ClassNotFoundException | SQLException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
                 }else {
                     try {
                         new FlowerDatabase().Insert(selectTable,field1,field2,field3,field4,field5,null);
-                    } catch (ClassNotFoundException | SQLException ex) {
+                    } catch (ClassNotFoundException | SQLException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
                 }

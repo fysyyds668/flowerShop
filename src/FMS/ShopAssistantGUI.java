@@ -6,6 +6,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -31,7 +33,7 @@ public class ShopAssistantGUI extends JFrame {
         return totalprice;
     }
 
-    public ShopAssistantGUI() throws SQLException, ClassNotFoundException {
+    public ShopAssistantGUI() throws SQLException, ClassNotFoundException, IOException {
         super("店员管理销售信息");
         setVisible(true);
         setLayout(null);
@@ -68,7 +70,7 @@ public class ShopAssistantGUI extends JFrame {
                     select_table = "flower1";
                     try {
                         data = new FlowerDatabase().FindAll(select_table);
-                    } catch (SQLException | ClassNotFoundException ex) {
+                    } catch (SQLException | ClassNotFoundException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
                     //System.out.println(select_table);
@@ -79,7 +81,7 @@ public class ShopAssistantGUI extends JFrame {
                     select_table = "supplies";
                     try {
                         data = new FlowerDatabase().FindAll(select_table);
-                    } catch (SQLException | ClassNotFoundException ex) {
+                    } catch (SQLException | ClassNotFoundException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
                     //System.out.println(select_table);
@@ -89,7 +91,7 @@ public class ShopAssistantGUI extends JFrame {
                     select_table = "fertilizers";
                     try {
                         data = new FlowerDatabase().FindAll(select_table);
-                    } catch (SQLException | ClassNotFoundException ex) {
+                    } catch (SQLException | ClassNotFoundException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
                     //System.out.println(select_table);
@@ -108,7 +110,7 @@ public class ShopAssistantGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     data = new FlowerDatabase().Find(select_table, textField.getText());
-                } catch (SQLException | ClassNotFoundException ex) {
+                } catch (SQLException | ClassNotFoundException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 refreshTable();
@@ -173,7 +175,7 @@ public class ShopAssistantGUI extends JFrame {
                         usershopID.setText("");
                         usershopnum.setText("");
 
-                    } catch (SQLException | ClassNotFoundException ex) {
+                    } catch (SQLException | ClassNotFoundException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
 
@@ -196,7 +198,7 @@ public class ShopAssistantGUI extends JFrame {
                         //System.out.println("total:"+totalprice);
                         //System.out.println((int)saledata[i][0]+(int)saledata[i][2]);
                         new FlowerDatabase().saleupdate(sale_data[i]);
-                    } catch (SQLException | ClassNotFoundException ex) {
+                    } catch (SQLException | ClassNotFoundException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
                     row.clear();
@@ -207,7 +209,7 @@ public class ShopAssistantGUI extends JFrame {
                 //totalprice=0;
                 try {
                     data = new FlowerDatabase().Find("flower1", textField.getText());
-                } catch (SQLException | ClassNotFoundException ex) {
+                } catch (SQLException | ClassNotFoundException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 refreshTable();

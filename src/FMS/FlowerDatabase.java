@@ -7,9 +7,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.swing.table.DefaultTableModel;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,12 +15,20 @@ import java.util.Date;
 import java.util.Random;
 
 public class FlowerDatabase {
-    private final String url="jdbc:mysql://127.0.0.1:3306/florist";
-    private final String user="root";
-    private final String password="@twd20040401.";
+    FileInputStream fileInputStream= new FileInputStream("src/resource/DBS.txt");
+    InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
+    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+    private  String url=bufferedReader.readLine();;
+    private  String user=bufferedReader.readLine();
+    private  String password=bufferedReader.readLine();
     private final Connection connection = DriverManager.getConnection(url,user,password);
     private final XSSFWorkbook workbook = new XSSFWorkbook();
-    public FlowerDatabase() throws ClassNotFoundException, SQLException {
+    public FlowerDatabase() throws ClassNotFoundException, SQLException, IOException {
+
+    }
+
+    public void fun() throws FileNotFoundException {
+
     }
 
     public Object[][] FindAll(String tableName) throws ClassNotFoundException, SQLException {

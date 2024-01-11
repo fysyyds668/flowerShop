@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class MyLogin extends JFrame{
@@ -21,6 +22,8 @@ public class MyLogin extends JFrame{
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
+
+
 
         Font font = new Font("SansSerif", Font.PLAIN, 15);
         setLayout(null);
@@ -82,7 +85,7 @@ public class MyLogin extends JFrame{
                 if(select==0){
                     try {
                          flag = new FlowerDatabase().IsLogin_boss(user, password1);
-                    } catch (SQLException | ClassNotFoundException ex) {
+                    } catch (SQLException | ClassNotFoundException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
                     if(flag) {
@@ -102,7 +105,7 @@ public class MyLogin extends JFrame{
                 }else if(select==1){
                     try {
                         flag = new FlowerDatabase().IsLogin_employ(user, password1);
-                    } catch (SQLException | ClassNotFoundException ex) {
+                    } catch (SQLException | ClassNotFoundException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
                     if(flag) {
@@ -110,7 +113,7 @@ public class MyLogin extends JFrame{
                         System.out.println("login success!");
                         try {
                             new ShopAssistantGUI();
-                        } catch (SQLException | ClassNotFoundException ex) {
+                        } catch (SQLException | ClassNotFoundException | IOException ex) {
                             throw new RuntimeException(ex);
                         }
                         dispose();
@@ -133,9 +136,10 @@ public class MyLogin extends JFrame{
                 }
             }
         });
-        add(signbutton);
-        repaint();
 
+        add(signbutton);
+
+        repaint();
     }
 }
 class Sign_up extends JFrame{
@@ -189,7 +193,7 @@ class Sign_up extends JFrame{
                     }else {
                         JOptionPane.showMessageDialog(null,"该账号已存在！","警告",JOptionPane.WARNING_MESSAGE);
                     }
-                } catch (SQLException | ClassNotFoundException ex) {
+                } catch (SQLException | ClassNotFoundException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
 
